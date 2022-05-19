@@ -1,6 +1,6 @@
 package cat.itacademy.barcelonactiva.S05T02N01GarciaSara.controller;
 
-import cat.itacademy.barcelonactiva.S05T02N01GarciaSara.model.User;
+import cat.itacademy.barcelonactiva.S05T02N01GarciaSara.model.LoginUsuari;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,21 +14,25 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//para implementar el proceso de autentificacion mediante un login usuari/contraseña
 @RestController
 @RequestMapping("/")
-public class UserController {
+public class LoginController {
 
-    @PostMapping("/user")
-    public User login(@RequestParam("user") String username,
-                      @RequestParam ("password") String pwd) {
+    //interceptará las peticiones y recibirá como parametro el usuario y contraseña
+    @PostMapping("/login")
+    public LoginUsuari login(@RequestParam("user") String username,
+                             @RequestParam ("password") String pwd) {
         String token = getJWTToken(username);
-        User user = new User();
-        user.setUser(username);
-        user.setToken(token);
-        return user;
+        LoginUsuari loginUsuari = new LoginUsuari();
+        loginUsuari.setUser(username);
+        loginUsuari.setToken(token);
+        return loginUsuari;
     }
 
-
+    //para construir el token, delegando en la clase de utilidad Jwts que incluye información sobre su
+    // expiración y un objeto de GrantedAuthority de Spring que usaremos para autorizar las peticiones
+    // a los recursos protegidos
     private String getJWTToken(String username) {
         String secretKey = "mySecretKey";
         List<GrantedAuthority> grantedAut = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");

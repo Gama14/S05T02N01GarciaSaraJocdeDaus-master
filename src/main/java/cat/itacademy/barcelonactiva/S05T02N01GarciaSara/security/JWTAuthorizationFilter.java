@@ -41,13 +41,13 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             return;
         }
     }
-
+    //si el token existe lo desencripta y valida
     private Claims validateToken1(HttpServletRequest request) {
         String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
         return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
     }
 
-    // Metodo para autenticarnos dentro del flujo de Spring
+    //añade la configuración necesaria al contexto de Spring para autorizar la petición
     private void setUpSpringAuthentication(Claims claims) {
         @SuppressWarnings("unchecked")
         List<String> authorities = (List) claims.get("authorities");
@@ -57,7 +57,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(auth);
 
     }
-
+    //Comprueba la existencia del token
     private boolean existeJWTToken(HttpServletRequest request, HttpServletResponse res) {
         String authenticationHeader = request.getHeader(HEADER);
         if (authenticationHeader == null || !authenticationHeader.startsWith(PREFIX))

@@ -26,7 +26,7 @@ public class S05T02N01GarciaSaraJocdeDausApplication {
 			http.csrf().disable()
 					.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 					.authorizeRequests()
-					.antMatchers(HttpMethod.POST, "/user").permitAll()
+					.antMatchers(HttpMethod.POST, "/login").permitAll()
 					.anyRequest().authenticated();
 		}
 	}

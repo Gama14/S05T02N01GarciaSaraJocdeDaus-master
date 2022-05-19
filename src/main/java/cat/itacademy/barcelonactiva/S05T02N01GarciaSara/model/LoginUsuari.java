@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 @NoArgsConstructor@AllArgsConstructor
-public class User implements UserDetails {
+public class LoginUsuari implements UserDetails {
 
     @Getter@Setter
     private String user;
