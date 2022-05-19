@@ -25,7 +25,6 @@ public class UsuariService {
         List<String> dadesUsuaris= new ArrayList<String>();
         for (Usuari u:usuaris) {
             dadesUsuaris.add(u.toString());
-
         }
 
         return dadesUsuaris;

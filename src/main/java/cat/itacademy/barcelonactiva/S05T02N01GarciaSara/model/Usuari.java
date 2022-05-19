@@ -52,6 +52,7 @@ public class Usuari  {
 
     }
 
+
     public double percentatgeExit (List<Partida> partides){
         double partidesTotals= partides.size();
         double victories= 0;

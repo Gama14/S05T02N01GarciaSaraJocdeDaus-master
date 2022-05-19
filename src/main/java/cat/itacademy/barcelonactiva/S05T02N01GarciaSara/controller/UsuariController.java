@@ -3,13 +3,10 @@ package cat.itacademy.barcelonactiva.S05T02N01GarciaSara.controller;
 import cat.itacademy.barcelonactiva.S05T02N01GarciaSara.model.Usuari;
 import cat.itacademy.barcelonactiva.S05T02N01GarciaSara.service.PartidaService;
 import cat.itacademy.barcelonactiva.S05T02N01GarciaSara.service.UsuariService;
-import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController("/")
 public class UsuariController {
@@ -33,9 +30,9 @@ public class UsuariController {
        }
    }
 
-   @PutMapping("/players/{id}")
-   public ResponseEntity updateUsuari(@RequestBody Usuari usuari, @PathVariable(value= "id") Long id) throws Exception {
-       Usuari usuariTrobat = usuariService.getById(id);
+   @PutMapping("/players/{idUsuari}")
+   public ResponseEntity updateUsuari(@RequestBody Usuari usuari, @PathVariable(value= "idUsuari") Long idUsuari) throws Exception {
+       Usuari usuariTrobat = usuariService.getById(idUsuari);
        if(usuari.getNomUsuari() != null && !usuariService.nomExisteix(usuari)){
            usuariTrobat.setNomUsuari(usuari.getNomUsuari());
            return ResponseEntity.status(HttpStatus.OK).body( usuariService.updateUsuari(usuariTrobat));
@@ -47,16 +44,16 @@ public class UsuariController {
 
    }
 
-   @PostMapping("/players/{id}/games")
-   public ResponseEntity addPartida (@PathVariable(value="id") Long id) throws Exception {
-      Usuari usuari= usuariService.getById(id);
+   @PostMapping("/players/{idUsuari}/games")
+   public ResponseEntity addPartida (@PathVariable(value="idUsuari") Long idUsuari) throws Exception {
+      Usuari usuari= usuariService.getById(idUsuari);
        partidaService.addPartida(usuari);
        return ResponseEntity.status(HttpStatus.CREATED).body( partidaService.addPartida(usuari).toString());
    }
 
-   @DeleteMapping ("/players/{id}/games")
-   public ResponseEntity deletePartides (@PathVariable("id") Long id) throws Exception {
-       Usuari usuari= usuariService.getById(id);
+   @DeleteMapping ("/players/{idUsuari}/games")
+   public ResponseEntity deletePartides (@PathVariable("idUsuari") Long idUsuari) throws Exception {
+       Usuari usuari= usuariService.getById(idUsuari);
        partidaService.deletePartides(usuari);
 
        return  ResponseEntity.status(HttpStatus.OK).body("Les partides han estat eliminades");
@@ -69,9 +66,9 @@ public class UsuariController {
         return (ResponseEntity.status(HttpStatus.OK)).body(usuariService.dadesUsuaris(usuariService.getUsuaris()));
     }
 
-    @GetMapping ("/players/{id}/games")
-    public  ResponseEntity getPartidesUsuari(@PathVariable("id") Long id) throws Exception {
-        Usuari usuari= usuariService.getById(id);
+    @GetMapping ("/players/{idUsuari}/games")
+    public  ResponseEntity getPartidesUsuari(@PathVariable("idUsuari") Long idUsuari) throws Exception {
+        Usuari usuari= usuariService.getById(idUsuari);
         return ResponseEntity.status(HttpStatus.OK).body(partidaService.dadesPartidesUsuaris(partidaService.getPartidesUsuari(usuari)));
     }
 

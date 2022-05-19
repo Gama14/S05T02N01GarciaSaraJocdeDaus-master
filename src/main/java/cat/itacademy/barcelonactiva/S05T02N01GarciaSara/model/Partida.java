@@ -39,8 +39,6 @@ public class Partida {
 
     public Partida (){
 
-
-
     }
 
     public Partida(Usuari usuari){
